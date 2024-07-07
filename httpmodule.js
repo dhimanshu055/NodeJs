@@ -43,7 +43,8 @@ server.listen(port,()=>{
     console.log("run this port 8080");
 })
 
-const http =  require('http')
+const http =  require('http');
+const { start } = require('repl');
 const port = 8080;
 const server = http.createServer(()=>{
     "this work done "
@@ -52,3 +53,10 @@ const server = http.createServer(()=>{
 server.listen(port,()=>{
     console.log("run this port 8080");
 })
+
+
+
+// install mangoos 
+
+npm start
+

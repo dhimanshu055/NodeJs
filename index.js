@@ -1,7 +1,13 @@
+// 1st we have to require (mongoose, express{app,json} and port)
+
 const mongoose = require('mongoose')
+
+
 const express = require('express')
 const app = express();
-app.use(express.json())
+
+app.use(express.json())         
+
 // const uri = 'mongodb://localhost:27017/'
 const port = 8000;
 
@@ -10,14 +16,16 @@ const port = 8000;
 
 
 
-// connection
+//after we will estabilsh a connection between mongodb and express
 mongoose.connect('mongodb://localhost:27017/current')
 .then(()=>{console.log("MongoDB connected ");})
 .catch((err)=>{console.log(err);})
 
 
+                        
 
-// schema 
+
+// after we will create schema and will use in model
 
 const userSchema = new mongoose.Schema({
     Name:{
@@ -29,20 +37,20 @@ const userSchema = new mongoose.Schema({
         required:true
     },
     salary:{
-        type:BigInt,
+        type:String,
         required:true
     }
 })
 
 
-// model 
+// create a model and use the schema  
 const User = mongoose.model('user', userSchema)
 
 
-// create
+// create a APi
 
 
-app.post('/sparta', async(req, respnse)=>{
+app.post('/sparta', async(req, res)=>{
     // console.log(req.body);
     const { Name, salary, unit } = req.body;
    await User.create({
@@ -50,8 +58,30 @@ app.post('/sparta', async(req, respnse)=>{
         salary:salary,
         unit:unit
     })
-    respnse.send({status:"001", message:"target achieved"})
+    // response to show on postman 
+    res.send({status:"001", 
+              message:"target achieved"})
+    console.log("done");
 })
+
+//  READ
+app.get('/read', async(req, res) => {
+    
+        const users = await User.find();
+        res.send(users);
+    // response to show on postman 
+        res.send({status: "002", 
+                  message: "Error reading users"});
+    
+});
+// Delete
+
+app.delete('/deleteuser/:user-id',async(res,req)=>{
+    const userId = req.param.user_id
+    await User.findOneAndDelete({_id:userId})
+    // response to show on postman 
+    res.send({Status:"001",message:"kam ho gya hai bhai "})
+  })
 
 app.listen(port, ()=>{
     console.log("port run");
