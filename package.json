@@ -2,10 +2,10 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "Check.js",
+  "main": "Practice.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon Check.js"
+    "start": "nodemon Practice.js"
   },
   "author": "",
   "license": "ISC",
